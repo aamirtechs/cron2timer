@@ -352,7 +352,8 @@ def test_check_mode_warns_on_percent_but_stays_zero(tmp_path, capsys):
     src = write_tmp(tmp_path, "c.tab", "0 0 * * * echo a%b\n")
     assert main([src, "--check"]) == 0
     out = capsys.readouterr().out
-    assert "warning" in out and "OK" in out
+    assert "feeds the text after % to the command on stdin" in out
+    assert "Use an explicit printf pipeline" in out
 
 
 def test_stdout_mode_prints_units(tmp_path, capsys):
