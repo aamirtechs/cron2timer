@@ -49,6 +49,18 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now backup-db.timer
 ```
 
+### User timers
+
+Many cron jobs run as non-root users. Pass `--user` and install with `systemctl --user`:
+
+```bash
+crontab -l | cron2timer --user --out-dir ~/.config/systemd/user
+systemctl --user daemon-reload
+systemctl --user enable --now backup-db.timer
+```
+
+`--user` writes `@reboot` services to `default.target` instead of `multi-user.target`.
+
 ## Example
 
 Given this crontab (`sample.cron`):
