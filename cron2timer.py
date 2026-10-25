@@ -379,8 +379,10 @@ def check_text(text):
     for job in jobs:
         if "%" in job.command:
             messages.append(
-                "warning: line %d: unescaped %% in the command means "
-                "newline in cron; cron2timer passes it through literally"
+                "warning: line %d: unescaped %% in cron splits the command "
+                "at that point and feeds the text after %% to the command "
+                "on stdin; cron2timer cannot map this to a systemd unit. "
+                "Use an explicit printf pipeline to provide stdin instead"
                 % job.lineno)
     ok = not errors
     if ok:
